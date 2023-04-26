@@ -1,0 +1,152 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+//******odd occuring element **///////////
+int oddoccuring(vector<int>arr)
+{
+    int s=0;
+    int e=arr.size()-1;
+    int mid=s+(e-s)/2;
+    while(s<=e)
+    {
+        if(s==e){
+            return s;
+        }
+        if(mid%2==0)
+        {
+            if(arr[mid]==arr[mid+1])
+            {
+                s=mid+2;
+            }
+            else{
+                e=mid;
+            }
+        }
+        else
+        {
+            if(arr[mid]==arr[mid-1])
+            {
+                s=mid+1;
+            }
+            else{
+                e=mid-1;
+            }
+        }
+        mid=s+(e-s)/2;  
+    }
+    return -1;
+}
+int main() 
+{
+      vector<int>arr{1,1,2,2,3,3,4,4,3,3,600,600,4,4};
+      int ans=oddoccuring(arr);
+      cout<<"ans is "<<ans<<endl;
+    
+   return 0;
+}
+
+
+//************bineary search in nearly sorted array************//
+#include<iostream>
+#include<vector>
+using namespace std;
+int binarysearch(vector<int>arr,int target)
+{
+    int s=0;
+    int e=arr.size()-1;
+    int mid=s+(e-s)/2;
+    while(s<=e)
+    {
+        if(arr[mid]==target)
+        {
+            return mid;
+        }
+        if(mid-1>=s && arr[mid-1]==target)
+        {
+            return mid-1;
+        }
+        if(mid+1<=e && arr[mid+1]==target) 
+        {
+            return mid+1;
+        }
+        if(target>arr[mid])
+        {
+            s=mid+2;
+        }
+        else
+        {
+            e=mid-2;
+        }
+        mid=s+(e-s)/2;
+    }
+    return -1;
+}
+int main()
+{
+    vector<int>arr{10,3,40,20,50,80,70};
+    int target=70;
+    int ans=binarysearch(arr,target);
+    cout<<"index of target is "<<ans<<endl;
+    return 0;
+}
+//*********dividing two number using binary search*****///////
+#include<iostream>
+using namespace std;
+ 
+ int solve(int dividend,int divisior)
+ {
+     int ans=0;
+     int s=0;
+     int e=abs(dividend);
+     int mid=s+(e-s)/2;
+     while(s<=e)
+     {
+         if(abs(mid*divisior)==abs(dividend))
+         {
+             ans=mid;
+             break;
+         }
+         else if(abs(mid*divisior)<abs(dividend))
+         {
+             ans=mid;
+             s=mid+1;
+         }
+         else if(abs(mid*divisior)>abs(dividend))
+         {
+             e=mid-1;
+         }
+         mid=s+(e-s)/2;
+     }
+     if((divisior<0 && dividend<0) || (divisior>0 && dividend>0))
+     {
+         return ans;
+     }
+     else
+     {
+         return -ans;
+     }
+     return ans;
+ }
+ 
+ int main()
+ {
+     int dividend=22;
+     int divisior=7;
+     int ans=solve(dividend,divisior);
+     cout<<"Ans is "<<ans<<endl;
+     double finalans=ans;
+     int precision;
+     cout<<"enter the decimal point you needed ";
+     cin>>precision;
+     double step=0.1;
+     for(int i=0;i<precision;i++)
+     {
+         for(double j=finalans;finalans*divisior<=dividend;j+=step)
+         {
+             finalans=j;
+         }
+         step=step/10;
+     }
+     cout<<"final ans is "<<finalans<<endl;
+     return 0;
+ }
